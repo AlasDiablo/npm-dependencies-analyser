@@ -15,7 +15,7 @@ jobs:
         run: wget https://github.com/AlasDiablo/npm-dependencies-analyser/releases/download/1.0.2/npm-dependencies-analyser-ci.zip
 
       - name: Extracting npm-dependencies-analyser
-        run: unzip npm-dependencies-analyser.zip -d ./.github/actions/npm-dependencies-analyser
+        run: unzip npm-dependencies-analyser-ci.zip -d ./.github/actions/npm-dependencies-analyser
 
       - name: Run npm-dependencies-analyser
         uses: ./.github/actions/npm-dependencies-analyser
