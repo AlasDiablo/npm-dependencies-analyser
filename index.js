@@ -83,8 +83,25 @@ const run = async () => {
     };
 
     const auditProd = await exec.getExecOutput('npm', ['audit', '--json', '--omit', 'dev'], { failOnStdErr: true });
+    if (auditProd.exitCode !== 0) {
+        core.error(auditProd.stderr);
+        core.setFailed("Can't not run 'npm audit --json --omit dev'");
+        return null;
+    }
+
     const auditAll = await exec.getExecOutput('npm', ['audit', '--json'], { failOnStdErr: true });
+    if (auditAll.exitCode !== 0) {
+        core.error(auditAll.stderr);
+        core.setFailed("Can't not run 'npm audit --json'");
+        return null;
+    }
+
     const outdated = await exec.getExecOutput('npm', ['outdated', '-l', '-p'], { failOnStdErr: true });
+    if (outdated.exitCode !== 0) {
+        core.error(outdated.stderr);
+        core.setFailed("Can't not run 'npm outdated -l -p'");
+        return null;
+    }
 
     outputData.audit.prod = JSON.parse(auditProd.stdout);
     outputData.audit.all = JSON.parse(auditAll.stdout);
