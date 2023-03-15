@@ -11,3 +11,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Experimental Run
         uses: ./
+        with:
+          host: 'http://127.0.0.1'
+          token: 'secret'
