@@ -106,12 +106,14 @@ const run = async () => {
         core.error("Can't not run 'npm outdated -l -p'");
     }
 
-    outputData.audit.prod = JSON.parse(auditProd.stdout);
-    outputData.audit.all = JSON.parse(auditAll.stdout);
+    if (auditProd) outputData.audit.prod = JSON.parse(auditProd.stdout);
+    if (auditAll) outputData.audit.all = JSON.parse(auditAll.stdout);
 
-    outdated.stdout.split('\n').forEach((line) => {
-        outputData.outdated.push(new MatcherHandler(line.match(/.*(node_modules[^:]*):([^:]*):([^:]*):([^:]*):([^:]*):([^:]*):([https|http:].*)/)).get());
-    });
+    if (outdated && outdated.stdout && outdated.stdout !== '') {
+        outdated.stdout.split('\n').forEach((line) => {
+            outputData.outdated.push(new MatcherHandler(line.match(/.*(node_modules[^:]*):([^:]*):([^:]*):([^:]*):([^:]*):([^:]*):([https|http:].*)/)).get());
+        });
+    }
 
     if (send) {
         await new HttpClient().postJson(host, outputData);
