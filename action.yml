@@ -1,0 +1,17 @@
+name:
+  'npm-dependencies-analyser'
+description:
+  'A tools use to analyse outdated package and security issues with package'
+inputs:
+  host:
+    description: 'Server host use to display the generated data'
+    required: true
+  token:
+    description: 'Access token'
+    required: true
+runs:
+  using: 'node16'
+  main: 'index.js'
+branding:
+  color: 'purple'
+  icon: 'package'

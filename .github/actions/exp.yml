@@ -1,0 +1,13 @@
+name: Experimental Actions
+
+on:
+  push:
+    branches: [ 'master' ]
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Experimental Run
+        uses: ./
