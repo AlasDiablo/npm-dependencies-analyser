@@ -8,13 +8,21 @@ jobs:
   action:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: git clone https://github.com/AlasDiablo/npm-dependencies-analyser.get ./.github/actions/analyser
-      - run: cd ./.github/actions/analyser
-      - run: npm install
-      - run: cd ../../../
-      - name: Experimental Run
-        uses: ./.github/actions/analyser
+      - name: Clone project
+        uses: actions/checkout@v3
+
+      - name: Clone npm-dependencies-analyser repo
+        uses: actions/checkout@v3
+        with:
+          repository: AlasDiablo/npm-dependencies-analyser
+          path: npm-dependencies-analyser
+
+      - name: Install npm-dependencies-analyser
+        run: npm install
+        working-directory: npm-dependencies-analyser
+
+      - name: Run npm-dependencies-analyser
+        uses: ./npm-dependencies-analyser
         with:
           host: 'http://127.0.0.1'
           token: 'secret'
