@@ -5,6 +5,7 @@ const { HttpClient } = require('@actions/http-client');
 
 const host = core.getInput('host', { required: true });
 const token = core.getInput('token', { required: true });
+const send = core.getInput('send', { required: true });
 
 class MatcherHandler {
     value;
@@ -92,7 +93,7 @@ const run = async () => {
         outputData.outdated.push(new MatcherHandler(line.match(/.*(node_modules[^:]*):([^:]*):([^:]*):([^:]*):([^:]*):([^:]*):([https|http:].*)/)).get());
     });
 
-    // await new HttpClient().postJson(host, outputData);
+    if (send) await new HttpClient().postJson(host, outputData);
     core.info(JSON.stringify(outputData));
 };
 

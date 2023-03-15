@@ -1,0 +1,21 @@
+name: Example
+
+on:
+  push:
+    branches: [ 'master' ]
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: git clone https://github.com/AlasDiablo/npm-dependencies-analyser.get ./.github/actions/analyser
+      - run: cd ./.github/actions/analyser
+      - run: npm install
+      - run: cd ../../../
+      - name: Experimental Run
+        uses: ./.github/actions/analyser
+        with:
+          host: 'http://127.0.0.1'
+          token: 'secret'
+          send: false

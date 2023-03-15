@@ -9,6 +9,9 @@ inputs:
   token:
     description: 'Access token'
     required: true
+  send:
+    description: 'Send data to the server'
+    required: true
 runs:
   using: 'node16'
   main: 'index.js'
