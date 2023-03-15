@@ -82,25 +82,28 @@ const run = async () => {
         outdated: [],
     };
 
-    const auditProd = await exec.getExecOutput('npm', ['audit', '--json', '--omit', 'dev'], { failOnStdErr: true });
-    if (auditProd.exitCode !== 0) {
-        core.error(auditProd.stderr);
+    let auditProd;
+    try {
+        auditProd = await exec.getExecOutput('npm', ['audit', '--json', '--omit', 'dev'], { failOnStdErr: true });
+    } catch (err) {
+        core.error(err);
         core.setFailed("Can't not run 'npm audit --json --omit dev'");
-        return null;
     }
 
-    const auditAll = await exec.getExecOutput('npm', ['audit', '--json'], { failOnStdErr: true });
-    if (auditAll.exitCode !== 0) {
-        core.error(auditAll.stderr);
+    let auditAll;
+    try {
+        auditAll = await exec.getExecOutput('npm', ['audit', '--json'], { failOnStdErr: true });
+    } catch (err) {
+        core.error(err);
         core.setFailed("Can't not run 'npm audit --json'");
-        return null;
     }
 
-    const outdated = await exec.getExecOutput('npm', ['outdated', '-l', '-p'], { failOnStdErr: true });
-    if (outdated.exitCode !== 0) {
-        core.error(outdated.stderr);
-        core.setFailed("Can't not run 'npm outdated -l -p'");
-        return null;
+    let outdated;
+    try {
+        outdated = await exec.getExecOutput('npm', ['outdated', '-l', '-p'], { failOnStdErr: true });
+    } catch (err) {
+        core.error(err);
+        core.error("Can't not run 'npm outdated -l -p'");
     }
 
     outputData.audit.prod = JSON.parse(auditProd.stdout);
