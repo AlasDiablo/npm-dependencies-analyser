@@ -84,7 +84,7 @@ const run = async () => {
 
     let auditProd;
     try {
-        auditProd = await exec.getExecOutput('npm audit --json --omit dev');
+        auditProd = await exec.getExecOutput('npm audit --json --omit dev', [], { ignoreReturnCode: true });
     } catch (err) {
         core.warning(err);
         core.warning("Can't not run 'npm audit --json --omit dev'");
@@ -92,7 +92,7 @@ const run = async () => {
 
     let auditAll;
     try {
-        auditAll = await exec.getExecOutput('npm audit --json');
+        auditAll = await exec.getExecOutput('npm audit --json', [], { ignoreReturnCode: true });
     } catch (err) {
         core.warning(err);
         core.warning("Can't not run 'npm audit --json'");
@@ -100,7 +100,7 @@ const run = async () => {
 
     let outdated;
     try {
-        outdated = await exec.getExecOutput('npm outdated -l -p');
+        outdated = await exec.getExecOutput('npm outdated -l -p', [], { ignoreReturnCode: true });
     } catch (err) {
         core.warning(err);
         core.warning("Can't not run 'npm outdated -l -p'");
