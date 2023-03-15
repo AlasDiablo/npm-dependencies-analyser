@@ -93,8 +93,12 @@ const run = async () => {
         outputData.outdated.push(new MatcherHandler(line.match(/.*(node_modules[^:]*):([^:]*):([^:]*):([^:]*):([^:]*):([^:]*):([https|http:].*)/)).get());
     });
 
-    if (send) await new HttpClient().postJson(host, outputData);
-    core.info(JSON.stringify(outputData));
+    if (send) {
+        await new HttpClient().postJson(host, outputData);
+    }
+    return outputData;
 };
 
-run().then();
+run().then((r) => {
+    core.setOutput('result', r);
+});

@@ -12,6 +12,9 @@ inputs:
   send:
     description: 'Send data to the server'
     required: true
+outputs:
+  result:
+    description: 'Json containing data gathered'
 runs:
   using: 'node16'
   main: 'index.js'
