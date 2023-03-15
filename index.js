@@ -111,7 +111,9 @@ const run = async () => {
 
     if (outdated && outdated.stdout && outdated.stdout !== '') {
         outdated.stdout.split('\n').forEach((line) => {
-            outputData.outdated.push(new MatcherHandler(line.match(/.*(node_modules[^:]*):([^:]*):([^:]*):([^:]*):([^:]*):([^:]*):([https|http:].*)/)).get());
+            if (line != null) {
+                outputData.outdated.push(new MatcherHandler(line.match(/.*(node_modules[^:]*):([^:]*):([^:]*):([^:]*):([^:]*):([^:]*):([https|http:].*)/)).get());
+            }
         });
     }
 
