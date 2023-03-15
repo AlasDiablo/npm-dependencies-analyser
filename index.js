@@ -5,7 +5,7 @@ const { HttpClient } = require('@actions/http-client');
 
 const host = core.getInput('host', { required: true });
 const token = core.getInput('token', { required: true });
-const send = core.getInput('send', { required: true });
+const send = core.getBooleanInput('send', { required: true });
 
 class MatcherHandler {
     value;
@@ -84,26 +84,26 @@ const run = async () => {
 
     let auditProd;
     try {
-        auditProd = await exec.getExecOutput('npm', ['audit', '--json', '--omit', 'dev'], { failOnStdErr: true });
+        auditProd = await exec.getExecOutput('npm audit --json --omit dev');
     } catch (err) {
-        core.error(err);
-        core.setFailed("Can't not run 'npm audit --json --omit dev'");
+        core.warning(err);
+        core.warning("Can't not run 'npm audit --json --omit dev'");
     }
 
     let auditAll;
     try {
-        auditAll = await exec.getExecOutput('npm', ['audit', '--json'], { failOnStdErr: true });
+        auditAll = await exec.getExecOutput('npm audit --json');
     } catch (err) {
-        core.error(err);
-        core.setFailed("Can't not run 'npm audit --json'");
+        core.warning(err);
+        core.warning("Can't not run 'npm audit --json'");
     }
 
     let outdated;
     try {
-        outdated = await exec.getExecOutput('npm', ['outdated', '-l', '-p'], { failOnStdErr: true });
+        outdated = await exec.getExecOutput('npm outdated -l -p');
     } catch (err) {
-        core.error(err);
-        core.error("Can't not run 'npm outdated -l -p'");
+        core.warning(err);
+        core.warning("Can't not run 'npm outdated -l -p'");
     }
 
     if (auditProd) outputData.audit.prod = JSON.parse(auditProd.stdout);
