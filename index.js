@@ -122,5 +122,7 @@ const run = async () => {
 };
 
 run().then((r) => {
+    core.info('Printing final data');
+    core.info(JSON.stringify(r));
     core.setOutput('result', r);
 });
