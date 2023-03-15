@@ -82,9 +82,9 @@ const run = async () => {
         outdated: [],
     };
 
-    const auditProd = await exec.getExecOutput('npm audit --json --omit dev');
-    const auditAll = await exec.getExecOutput('npm audit --json');
-    const outdated = await exec.getExecOutput('npm outdated -l -p');
+    const auditProd = await exec.getExecOutput('npm', ['audit', '--json', '--omit', 'dev'], { failOnStdErr: true });
+    const auditAll = await exec.getExecOutput('npm', ['audit', '--json'], { failOnStdErr: true });
+    const outdated = await exec.getExecOutput('npm', ['outdated', '-l', '-p'], { failOnStdErr: true });
 
     outputData.audit.prod = JSON.parse(auditProd.stdout);
     outputData.audit.all = JSON.parse(auditAll.stdout);
