@@ -11,20 +11,11 @@ jobs:
       - name: Clone project
         uses: actions/checkout@v3
 
-      - name: Install Node.js 16.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
+      - name: Download npm-dependencies-analyser
+        run: wget https://github.com/AlasDiablo/npm-dependencies-analyser/releases/download/1.0.0/npm-dependancies-analyser-ci.zip
 
-      - name: Clone npm-dependencies-analyser repo
-        uses: actions/checkout@v3
-        with:
-          repository: AlasDiablo/npm-dependencies-analyser
-          path: npm-dependencies-analyser
-
-      - name: Install npm-dependencies-analyser
-        run: npm install
-        working-directory: npm-dependencies-analyser
+      - name: Extracting npm-dependencies-analyser
+        run: unzip npm-dependancies-analyser-ci.zip -d npm-dependencies-analyser
 
       - name: Run npm-dependencies-analyser
         uses: ./npm-dependencies-analyser
